@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BeneficioService } from '../../services/beneficio.service';
+import { ToastService } from '../../services/toast.service';
 import { Beneficio } from '../../models/beneficio.model';
 
 @Component({
@@ -21,7 +22,8 @@ export class BeneficioFormComponent implements OnInit {
     private fb: FormBuilder,
     private beneficioService: BeneficioService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {
     this.beneficioForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(2)]],
@@ -79,18 +81,19 @@ export class BeneficioFormComponent implements OnInit {
 
     operation.subscribe({
       next: (beneficio) => {
-        this.success = this.isEditMode 
+        const message = this.isEditMode 
           ? 'Benefício atualizado com sucesso!' 
           : 'Benefício criado com sucesso!';
+        this.toast.showSuccess(message);
         this.loading = false;
         
-        // Redireciona após 2 segundos
+        // Redireciona após 1 segundo
         setTimeout(() => {
           this.router.navigate(['/beneficios']);
-        }, 2000);
+        }, 1000);
       },
       error: (error) => {
-        this.error = 'Erro ao salvar benefício: ' + error;
+        // O erro já será tratado pelo interceptor
         this.loading = false;
       }
     });

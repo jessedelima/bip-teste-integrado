@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BeneficioService } from '../../services/beneficio.service';
+import { ToastService } from '../../services/toast.service';
 import { Beneficio } from '../../models/beneficio.model';
 
 @Component({
@@ -11,11 +12,11 @@ import { Beneficio } from '../../models/beneficio.model';
 export class BeneficioListComponent implements OnInit {
   beneficios: Beneficio[] = [];
   loading = false;
-  error = '';
 
   constructor(
     private beneficioService: BeneficioService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +25,6 @@ export class BeneficioListComponent implements OnInit {
 
   loadBeneficios(): void {
     this.loading = true;
-    this.error = '';
     
     this.beneficioService.getAllBeneficios().subscribe({
       next: (beneficios) => {
@@ -32,7 +32,7 @@ export class BeneficioListComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Erro ao carregar benefícios: ' + error;
+        // O erro já será tratado pelo interceptor
         this.loading = false;
       }
     });
@@ -50,10 +50,11 @@ export class BeneficioListComponent implements OnInit {
     if (confirm(`Tem certeza que deseja excluir o benefício "${nome}"?`)) {
       this.beneficioService.deleteBeneficio(id).subscribe({
         next: () => {
+          this.toast.showSuccess(`Benefício "${nome}" excluído com sucesso!`);
           this.loadBeneficios(); // Recarrega a lista
         },
         error: (error) => {
-          this.error = 'Erro ao excluir benefício: ' + error;
+          // O erro já será tratado pelo interceptor
         }
       });
     }

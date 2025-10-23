@@ -1,0 +1,7 @@
+com\example\backend\BeneficioController$TransferRequest.class
+com\example\backend\BackendApplication.class
+com\example\backend\Beneficio.class
+com\example\backend\BeneficioRepository.class
+com\example\backend\BeneficioController.class
+com\example\backend\BeneficioService.class
+com\example\backend\OpenApiConfig.class

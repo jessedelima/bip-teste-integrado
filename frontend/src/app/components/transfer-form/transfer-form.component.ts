@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BeneficioService } from '../../services/beneficio.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-transfer-form',
@@ -10,10 +11,8 @@ import { BeneficioService } from '../../services/beneficio.service';
 export class TransferFormComponent {
   form: FormGroup;
   loading = false;
-  error = '';
-  success = '';
 
-  constructor(private fb: FormBuilder, private beneficioService: BeneficioService) {
+  constructor(private fb: FormBuilder, private beneficioService: BeneficioService, private toast: ToastService) {
     this.form = this.fb.group({
       fromId: [null, [Validators.required, Validators.min(1)]],
       toId: [null, [Validators.required, Validators.min(1)]],
@@ -27,17 +26,15 @@ export class TransferFormComponent {
       return;
     }
     this.loading = true;
-    this.error = '';
-    this.success = '';
 
     this.beneficioService.transferBeneficios(this.form.value).subscribe({
       next: () => {
-        this.success = 'Transferência realizada com sucesso!';
+        this.toast.showSuccess('Transferência realizada com sucesso!');
         this.loading = false;
         this.form.reset({ amount: 0 });
       },
       error: (err) => {
-        this.error = 'Erro ao realizar transferência: ' + err;
+        // O erro já será tratado pelo interceptor
         this.loading = false;
       }
     });

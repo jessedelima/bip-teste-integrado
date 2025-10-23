@@ -1,8 +1,7 @@
 <div class="transfer-form card">
   <h1>Transferência de Benefícios</h1>
 
-  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
-  <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
 
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,8 @@ import { BeneficioFormComponent } from './components/beneficio-form/beneficio-fo
 import { BeneficioDetailComponent } from './components/beneficio-detail/beneficio-detail.component';
 import { TransferFormComponent } from './components/transfer-form/transfer-form.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     BeneficioFormComponent,
     BeneficioDetailComponent,
     TransferFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

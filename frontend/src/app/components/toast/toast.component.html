@@ -1,0 +1,6 @@
+<div class="toast-container">
+  <div *ngFor="let m of messages" class="toast" [class.success]="m.type==='success'" [class.error]="m.type==='error'" [class.info]="m.type==='info'">
+    <span class="text">{{ m.text }}</span>
+    <button class="close" (click)="remove(m.id)" aria-label="Fechar">×</button>
+  </div>
+</div>
