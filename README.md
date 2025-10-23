@@ -8,26 +8,35 @@ Este README acompanha a execução do desafio em camadas (DB, EJB, Backend, Fron
 - [x] Corrigir bug no EJB (validação, rollback, locking pessimista)
 - [x] Implementar Backend CRUD + transferência
 - [x] Documentar com Swagger (UI em `/swagger-ui.html`)
-- [ ] Desenvolver Frontend Angular consumindo Backend
+- [x] Desenvolver Frontend Angular consumindo Backend
 - [x] Implementar testes (unitários de serviço)
-- [ ] Submeter via fork + PR
+- [x] Submeter via fork + PR
 
 ## Estrutura do Projeto
 - `db/`: scripts de schema e seed
 - `ejb-module/`: serviço EJB com bug corrigido
 - `backend-module/`: backend Spring Boot (CRUD e transferência)
-- `frontend/`: app Angular (a ser implementado)
+- `frontend/`: app Angular (lista, detalhe, criar/editar, excluir e transferência; toast de mensagens; interceptor global de erros)
 - `docs/`: instruções do desafio
 - `.github/workflows/`: CI
 
-## Como rodar localmente (backend)
+## Como rodar localmente
+### Backend
 1. Pré-requisitos: Java 17, Maven.
 2. Configuração de banco: H2 em memória com auto-init dos scripts:
    - `backend-module/src/main/resources/schema.sql`
    - `backend-module/src/main/resources/data.sql`
-3. Executar o backend (exemplo):
-   - `mvn spring-boot:run` usando o `pom.xml` do módulo (ajuste conforme seu ambiente).
+   - Codificação: `spring.sql.init.encoding=UTF-8` definida em `application.properties` para acentuação correta.
+3. Executar o backend no diretório `backend-module/`:
+   - `mvn spring-boot:run`
 4. Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+### Frontend
+1. Pré-requisitos: Node 18+ / npm.
+2. No diretório `frontend/`:
+   - Instalar deps: `npm install`
+   - Rodar: `npm start` (porta `http://localhost:4200`)
+3. CORS já habilitado no backend para `http://localhost:4200`.
 
 ## EJB – Correção aplicada
 - Validações: parâmetros, valor positivo, benefícios ativos, saldo suficiente.
@@ -57,7 +66,9 @@ Este README acompanha a execução do desafio em camadas (DB, EJB, Backend, Fron
   - Valida erro de saldo insuficiente.
 
 ## Frontend (Angular)
-- A ser implementado: listar benefícios, criar/editar, excluir e realizar transferência.
+- Implementado: listar benefícios, detalhe, criar/editar, excluir e realizar transferência.
+- Tratamento global de erros via `HttpInterceptor` com mensagens amigáveis (ToastService).
+- Notificações centralizadas (sucesso/erro/info) com componente `ToastComponent` embutido no `AppComponent`.
 - Integração via HTTP com o backend (`/api/v1/beneficios`).
 
 ## Próximos passos
