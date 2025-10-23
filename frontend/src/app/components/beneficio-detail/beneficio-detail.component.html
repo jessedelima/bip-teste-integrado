@@ -1,0 +1,69 @@
+<div class="beneficio-detail">
+  <div class="header">
+    <button class="btn btn-secondary back-btn" (click)="goBack()">
+      ← Voltar
+    </button>
+    <h1>Detalhes do Benefício</h1>
+  </div>
+
+  <div *ngIf="error" class="alert alert-error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando benefício...</p>
+  </div>
+
+  <div *ngIf="!loading && beneficio" class="card">
+    <div class="beneficio-info">
+      <div class="info-row">
+        <label>ID:</label>
+        <span>{{ beneficio.id }}</span>
+      </div>
+
+      <div class="info-row">
+        <label>Nome:</label>
+        <span class="highlight">{{ beneficio.nome }}</span>
+      </div>
+
+      <div class="info-row">
+        <label>Descrição:</label>
+        <span>{{ beneficio.descricao }}</span>
+      </div>
+
+      <div class="info-row">
+        <label>Valor:</label>
+        <span class="value">{{ beneficio.valor | currency:'BRL':'symbol':'1.2-2' }}</span>
+      </div>
+
+      <div class="info-row">
+        <label>Status:</label>
+        <span class="status" [class.active]="beneficio.ativo" [class.inactive]="!beneficio.ativo">
+          {{ beneficio.ativo ? 'Ativo' : 'Inativo' }}
+        </span>
+      </div>
+
+      <div class="info-row" *ngIf="beneficio.version">
+        <label>Versão:</label>
+        <span>{{ beneficio.version }}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" (click)="editBeneficio()">
+        Editar
+      </button>
+      <button class="btn btn-danger" (click)="deleteBeneficio()">
+        Excluir
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !beneficio && !error" class="empty-state">
+    <p>Benefício não encontrado.</p>
+    <button class="btn btn-primary" (click)="goBack()">
+      Voltar à Lista
+    </button>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+.beneficio-list {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      color: #333;
+      margin: 0;
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &.active {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    &.inactive {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  }
+
+  .actions {
+    white-space: nowrap;
+
+    .btn {
+      margin-right: 0.5rem;
+      padding: 6px 10px;
+      font-size: 0.875rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .beneficio-list {
+    .header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .table {
+      font-size: 0.875rem;
+
+      th, td {
+        padding: 8px;
+      }
+    }
+
+    .actions {
+      .btn {
+        padding: 4px 8px;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}

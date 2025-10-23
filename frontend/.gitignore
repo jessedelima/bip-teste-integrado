@@ -1,0 +1,9 @@
+# Angular / Node
+node_modules/
+.angular/
+dist/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+*.log
